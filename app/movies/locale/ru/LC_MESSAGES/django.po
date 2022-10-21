@@ -1,0 +1,128 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-18 11:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: movies/apps.py:8
+msgid "movies"
+msgstr "Фильмы"
+
+#: movies/models.py:9 movies/models.py:31
+msgid "title"
+msgstr "Название"
+
+#: movies/models.py:10 movies/models.py:32
+msgid "description"
+msgstr "Описание"
+
+#: movies/models.py:18
+msgid "genre"
+msgstr "Жанр"
+
+#: movies/models.py:19 movies/models.py:43 movies/models.py:70
+msgid "genres"
+msgstr "Жанры"
+
+#: movies/models.py:24
+msgid "movie"
+msgstr "Фильм"
+
+#: movies/models.py:25
+msgid "tv_show"
+msgstr "ТВ шоу"
+
+#: movies/models.py:27
+msgid "certificate"
+msgstr "Сертификат"
+
+#: movies/models.py:29
+msgid "file"
+msgstr "Файл"
+
+#: movies/models.py:34
+msgid "creation_date"
+msgstr "Дата публикации"
+
+#: movies/models.py:37
+msgid "rating"
+msgstr "Рейтинг"
+
+#: movies/models.py:41
+msgid "type"
+msgstr "Тип"
+
+#: movies/models.py:51
+msgid "Filmwork"
+msgstr "Кинопроизведение"
+
+#: movies/models.py:52
+msgid "Filmworks"
+msgstr "Кинопроизведения"
+
+#: movies/models.py:56
+msgid "full_name"
+msgstr "Полное имя"
+
+#: movies/models.py:63
+msgid "Person"
+msgstr "Участник"
+
+#: movies/models.py:64
+msgid "Persons"
+msgstr "Участники"
+
+#: movies/models.py:68 movies/models.py:84
+msgid "film_work"
+msgstr "Кинопроизведение"
+
+#: movies/models.py:79
+msgid "Genre Filmwork"
+msgstr "Жанр Кинопроизведения"
+
+#: movies/models.py:80
+msgid "Genres Filmworks"
+msgstr "Жанры Кинопроизведения"
+
+#: movies/models.py:86
+msgid "persons"
+msgstr "Участники"
+
+#: movies/models.py:88
+msgid "role"
+msgstr "Роль"
+
+#: movies/models.py:96
+msgid "Person Filmwork"
+msgstr "Участник Кинопроизведения"
+
+#: movies/models.py:97
+msgid "Persons Filmworks"
+msgstr "Участники Кинопроизведения"
+
+#: movies/models_mixins.py:7
+msgid "created"
+msgstr "Дата создания"
+
+#: movies/models_mixins.py:8
+msgid "modified"
+msgstr "Изменено"
+
+#~ msgid "name"
+#~ msgstr "Имя"

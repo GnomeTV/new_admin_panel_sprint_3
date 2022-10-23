@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any, Optional
 
 
-class BaseStorage:
+class BaseStorage(abc.ABC):
     @abc.abstractmethod
     def save_state(self, state: dict) -> None:
         pass

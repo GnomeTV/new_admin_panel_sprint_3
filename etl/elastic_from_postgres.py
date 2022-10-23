@@ -1,17 +1,18 @@
 import json
 import logging
 import os
+import time
 from contextlib import contextmanager
 from urllib.parse import urljoin
 
 import backoff
 import psycopg2
 import requests
-from dotenv import load_dotenv
 from psycopg2 import OperationalError
 from psycopg2.extras import DictCursor
 from requests.exceptions import ConnectionError
 
+from settings import POSTGRES_SETTINGS, ETL_TRANSFER_PERIOD
 from state_manager import State, JsonFileStorage
 
 
@@ -25,16 +26,7 @@ def postgres_connect(dsl: dict, cursor_factory=None):
     connection.close()
 
 
-load_dotenv()
-
-
 class PostgresGetter:
-    dsl = {
-        'dbname': os.getenv('POSTGRES_DB', 'movies_database'),
-        'user': os.getenv('POSTGRES_USER', 'app'),
-        'password': os.getenv('POSTGRES_PASSWORD', '123qwe'),
-        'host': os.getenv('POSTGRES_HOST', '127.0.0.1'),
-        'port': os.getenv('POSTGRES_PORT', '5432')}
 
     def __init__(self, state_file_path):
         self.state = State(JsonFileStorage(state_file_path))
@@ -47,7 +39,8 @@ class PostgresGetter:
     def get_movies_data(self):
         modified = self.state.get_state('time')
 
-        with postgres_connect(self.dsl, cursor_factory=DictCursor) as cursor:
+        with postgres_connect(POSTGRES_SETTINGS, cursor_factory=DictCursor) \
+                as cursor:
             query = """
                    SELECT
                        fw.id,
@@ -73,7 +66,9 @@ class PostgresGetter:
                     LEFT JOIN person p ON p.id = pfw.person_id
                     LEFT JOIN genre_film_work gfw ON gfw.film_work_id = fw.id
                     LEFT JOIN genre g ON g.id = gfw.genre_id
-                    WHERE fw.modified > '{modified}'::timestamp
+                    WHERE fw.modified > '{modified}'::timestamp OR
+                     p.modified > '{modified}'::timestamp OR 
+                     g.modified > '{modified}'::timestamp
                     GROUP BY fw.id
                     ORDER BY fw.modified
                     LIMIT 100;  
@@ -147,7 +142,8 @@ class ElasticSetter:
         while True:
             result = data_getter.get_movies_data()
             if not result:
-                break
+                time.sleep(ETL_TRANSFER_PERIOD)
+                continue
             queue = self.compile_elastic_queue(result)
             requests.post(url=urljoin(
                 os.environ.get('ELK_HOST'), '_bulk'), data=queue,
@@ -155,8 +151,8 @@ class ElasticSetter:
                     'Content-Type': 'application/x-ndjson'
                 }
             )
+            logging.info('Data transferred to Elastic!')
 
-        logging.info('Data transferred to Elastic!')
 
-
-ElasticSetter().set_data()
+if __name__ == '__main__':
+    ElasticSetter().set_data()
